@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stark Café | Premium Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { 
+            --primary: #2c1810; 
+            --accent: #d4a373; 
+            --bg: #1a1a1a; 
+            --card-bg: #262626;
+            --text: #f8f9fa;
+            --gold: #c6a664;
+            --danger: #e74c3c;
+            --success: #27ae60;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: #1a1a1a;
+            color: var(--text); 
+            line-height: 1.6; 
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed; top: 0; width: 100%; background: rgba(26, 26, 26, 0.98);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 8%; z-index: 1000; border-bottom: 1px solid var(--accent);
+        }
+        .nav-logo-container { display: flex; align-items: center; gap: 12px; }
+        .nav-logo-img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--accent); }
+        .nav-logo-text { font-family: 'Playfair Display', serif; font-weight: bold; color: var(--accent); font-size: 1.5rem; }
+        
+        .nav-links a { text-decoration: none; color: var(--text); margin-left: 20px; font-weight: 500; font-size: 0.9rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* --- PARALLAX EFFECT --- */
+        .parallax-section {
+            height: 100vh;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .img-1 { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://image2url.com/r2/default/images/1768991200384-b2b29f7e-0227-4f28-adf0-beb8618005b9.jpeg'); }
+        .img-2 { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1600'); }
+        .img-3 { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1600'); }
+        .img-4 { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1600'); }
+
+        .parallax-section h1 { font-family: 'Playfair Display', serif; font-size: 4.5rem; color: var(--gold); text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
+        .parallax-section p { font-size: 1.3rem; max-width: 600px; margin-bottom: 20px; text-shadow: 1px 1px 5px rgba(0,0,0,0.5); }
+        
+        .divider-content { background: #1a1a1a; padding: 80px 20px; text-align: center; }
+        .divider-content h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--accent); }
+
+        .btn-order { background: var(--accent); color: var(--primary); padding: 12px 35px; text-decoration: none; border-radius: 30px; font-weight: bold; transition: 0.3s; border: 2px solid transparent; }
+        .btn-order:hover { background: transparent; color: var(--accent); border-color: var(--accent); transform: translateY(-3px); }
+
+        /* --- MENU SECTION --- */
+        .container { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h2 { font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--gold); }
+        .section-title div { width: 80px; height: 3px; background: var(--accent); margin: 15px auto; }
+
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .category-card { background: var(--card-bg); border-radius: 20px; overflow: hidden; border: 1px solid #3d2b1f; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+        .category-head { background: linear-gradient(to right, #3d2b1f, #2c1810); color: var(--accent); padding: 20px; font-weight: 600; text-transform: uppercase; border-bottom: 1px solid var(--accent); }
+        
+        .item { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid #333; transition: 0.3s; }
+        .item:hover { background: #2d2d2d; }
+        .item-info b { display: block; font-size: 0.95rem; color: #fff; max-width: 180px; }
+        .item-info span { color: var(--accent); font-weight: 600; font-size: 0.9rem; }
+
+        .controls { display: flex; align-items: center; gap: 12px; }
+        .btn-qty { width: 28px; height: 28px; border-radius: 50%; border: none; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+        .btn-minus { background: var(--danger); color: white; }
+        .btn-plus { background: var(--success); color: white; }
+        .add-btn-init { background: transparent; border: 1.5px solid var(--accent); color: var(--accent); padding: 5px 15px; border-radius: 20px; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        .add-btn-init:hover { background: var(--accent); color: var(--primary); }
+
+        /* --- CART & MODAL --- */
+        .cart-bar { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 550px; background: var(--accent); color: var(--primary); padding: 15px 30px; border-radius: 50px; display: none; justify-content: space-between; align-items: center; z-index: 2000; box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
+        
+        #orderModal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.9); z-index: 3000; justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background: var(--card-bg); padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid var(--accent); text-align: left;
+        }
+        .modal-content h3 { color: var(--gold); margin-bottom: 20px; font-family: 'Playfair Display', serif; }
+        .modal-input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #444; background: #1a1a1a; color: white; font-family: 'Poppins', sans-serif; }
+
+        #contact { background: #121212; padding: 80px 20px; }
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; max-width: 1100px; margin: 0 auto; text-align: center; }
+        footer { text-align: center; padding: 30px; background: #0a0a0a; color: #555; }
+
+        @media (max-width: 768px) {
+            .parallax-section h1 { font-size: 2.8rem; }
+            .parallax-section { background-attachment: scroll; }
+            .nav-logo-text { font-size: 1.2rem; }
+            .nav-logo-img { width: 35px; height: 35px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-logo-container">
+        <img src="logo.png.jpeg" alt="Stark Cafe Logo" class="nav-logo-img">
+        <div class="nav-logo-text">Stark Café</div>
+    </div>
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#contact">Contact</a>
+    </div>
+</nav>
+
+<div id="home">
+    <section class="parallax-section img-1">
+        <h1>Stark Café</h1>
+        <p>Premium Coffee & Handcrafted Moments at RIT College.</p>
+        <a href="#menu" class="btn-order">VIEW MENU</a>
+    </section>
+
+    <div class="divider-content">
+        <h2>Freshly Brewed Excellence</h2>
+        <p>Experience the finest coffee blend in Islampur.</p>
+    </div>
+
+    <section class="parallax-section img-2">
+        <h1>The Perfect Roast</h1>
+        <p>Expertly brewed for your daily caffeine kick.</p>
+    </section>
+
+    <div class="divider-content">
+        <h2>Delicious Snacks</h2>
+        <p>From cheezy pizzas to hot grilled sandwiches.</p>
+    </div>
+
+    <section class="parallax-section img-3">
+        <h1>Hot & Cheezy</h1>
+        <p>Pizzas that make your heart melt.</p>
+    </section>
+
+    <section class="parallax-section img-4">
+        <h1>Join The Vibe</h1>
+        <p>Best place to hang out with friends at RIT College.</p>
+    </section>
+</div>
+
+<div class="container" id="menu">
+    <div class="section-title">
+        <h2>Our Full Menu</h2>
+        <div></div>
+    </div>
+    <div id="menu-display" class="menu-grid"></div>
+</div>
+
+<section id="contact">
+    <div class="contact-grid">
+        <div class="contact-box">
+            <i class="fas fa-map-marker-alt" style="font-size: 2rem; color: var(--accent);"></i>
+            <h3 style="color: var(--gold); margin-top: 15px;">Location</h3>
+            <p>RIT College Takari Road, Islampur</p>
+        </div>
+        <div class="contact-box">
+            <i class="fas fa-phone-alt" style="font-size: 2rem; color: var(--accent);"></i>
+            <h3 style="color: var(--gold); margin-top: 15px;">Contact</h3>
+            <p>+91 8275035386</p>
+        </div>
+    </div>
+</section>
+
+<footer>&copy; 2026 Stark Café Islampur</footer>
+
+<div class="cart-bar" id="cart-ui">
+    <div id="cart-status" style="font-weight: 800;">0 Items | ₹0</div>
+    <button style="background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 30px; font-weight: bold; cursor: pointer;" onclick="openOrderModal()">Order via WhatsApp</button>
+</div>
+
+<div id="orderModal">
+    <div class="modal-content">
+        <h3>Order Details</h3>
+        <p style="font-size: 0.8rem; margin-bottom: 10px; color: var(--accent);">Please enter your details to confirm order.</p>
+        <input type="text" id="custName" class="modal-input" placeholder="Your Name">
+        <select id="tableSelect" class="modal-input">
+            <option value="">Select Table Number</option>
+            <option value="1">Table 1</option>
+            <option value="2">Table 2</option>
+            <option value="3">Table 3</option>
+            <option value="4">Table 4</option>
+            <option value="5">Table 5</option>
+        </select>
+        <div style="display:flex; gap:10px;">
+            <button onclick="closeModal()" style="flex:1; padding:12px; border-radius:10px; background:#444; color:white; border:none; cursor:pointer;">Cancel</button>
+            <button onclick="sendToWhatsApp()" style="flex:1; padding:12px; border-radius:10px; background:var(--accent); color:var(--primary); font-weight:bold; border:none; cursor:pointer;">Confirm Order</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const fullMenu = {
+        "Cold Coffees": [
+            {n: "Cold Coffee", p: 40}, {n: "Chocolate Cold Coffee", p: 50},
+            {n: "Cold Coffee + Crush", p: 60}, {n: "Cold Coffee + Ice Cream", p: 60},
+            {n: "Cold Coffee + Choco + Ice Cream", p: 80}, {n: "Orio Cold Coffee", p: 60}
+        ],
+        "Hot Coffee & Milk": [
+            {n: "Hot Coffee", p: 20}, {n: "Chocolate Hot Coffee", p: 30},
+            {n: "Bournvita", p: 20}, {n: "Masale Dudh", p: 20}, {n: "Haldi Dudh", p: 20}
+        ],
+        "CAD B & Mocktails": [
+            {n: "Chocolate CAD B", p: 60}, {n: "Orio CAD B", p: 80},
+            {n: "Red Million Mocktail", p: 60}, {n: "Blue Coraso Mocktail", p: 60}
+        ],
+        "Pizza": [
+            {n: "Plain Cheez Pizza", p: 100}, {n: "Tanduri Cheez Pizza", p: 110},
+            {n: "Corn Cheez Pizza", p: 110}, {n: "Onion Cheez Pizza", p: 120},
+            {n: "Mix Veg Cheez Pizza", p: 130}, {n: "Panner Cheez Pizza", p: 140},
+            {n: "Stark Special Pizza", p: 160}, {n: "Cheez Burst Pizza", p: 150}
+        ],
+        "Burger": [
+            {n: "Veg Burger", p: 60}, {n: "Veg Cheez Burger", p: 70},
+            {n: "Panner Burger", p: 80}, {n: "Panner Cheez Burger", p: 90},
+            {n: "Tanduri Burger", p: 60}, {n: "Tanduri Cheez Burger", p: 70},
+            {n: "Stark Special Burger", p: 100}
+        ],
+        "Fries & Nuggets": [
+            {n: "French Fries", p: 50}, {n: "Peri Peri Fries", p: 60},
+            {n: "Liquid Cheez Fries", p: 70}, {n: "Stark Special Fries", p: 100},
+            {n: "Veg Nuggets", p: 50}, {n: "Corn Nuggets", p: 70}, {n: "Chilli Garlic Nuggets", p: 60}
+        ],
+        "Sandwich": [
+            {n: "Plain Sandwich", p: 50}, {n: "Veg Grilled Sandwich", p: 60},
+            {n: "Veg Cheez Grilled Sandwich", p: 70}, {n: "Corn Cheez Grilled Sandwich", p: 80},
+            {n: "Panner Cheez Grilled Sandwich", p: 80}, {n: "Tanduri Cheez Grilled Sandwich", p: 80},
+            {n: "Stark Special Sandwich", p: 100}
+        ],
+        "Momos & Maggi": [
+            {n: "Mix Veg Momos (Fry/Steam)", p: 70}, {n: "Panner Momos (Fry/Steam)", p: 80},
+            {n: "Corn Momos (Fry/Steam)", p: 80}, {n: "Chicken Momos (Fry/Steam)", p: 80},
+            {n: "Plain Maggie", p: 35}, {n: "Masala Maggie", p: 40},
+            {n: "Peri Peri Maggie", p: 50}, {n: "Cheez Maggie", p: 60}
+        ],
+        "Toast & Dabeli": [
+            {n: "Chilli Cheez Toast", p: 50}, {n: "Garlic Cheez Toast", p: 50},
+            {n: "Panner Cheez Toast", p: 70}, {n: "Butter Dabeli", p: 20},
+            {n: "Miyonies Dabeli", p: 30}, {n: "Special Dabeli", p: 40},
+            {n: "Dabeli Toast", p: 40}, {n: "Miyonies Dabeli Toast", p: 50},
+            {n: "Special Dabeli Toast", p: 60}
+        ],
+        "Milkshakes & More": [
+            {n: "Strawberry Milkshake", p: 50}, {n: "Butterscotch Milkshake", p: 50},
+            {n: "Mango Milkshake", p: 50}, {n: "Schezling Brownie", p: 100},
+            {n: "Vanilla Ice-Cream", p: 40}, {n: "Chocolate Ice-Cream", p: 40}
+        ]
+    };
+
+    let cart = {};
+
+    function renderMenu() {
+        const display = document.getElementById('menu-display');
+        display.innerHTML = "";
+        for (let cat in fullMenu) {
+            let card = document.createElement('div');
+            card.className = 'category-card';
+            let itemsHtml = `<div class="category-head">${cat}</div>`;
+            fullMenu[cat].forEach(item => {
+                const qty = cart[item.n] ? cart[item.n].qty : 0;
+                itemsHtml += `
+                    <div class="item">
+                        <div class="item-info"><b>${item.n}</b><span>₹${item.p}</span></div>
+                        <div class="controls">
+                            ${qty > 0 ? `
+                                <button class="btn-qty btn-minus" onclick="updateCart('${item.n}', ${item.p}, -1)">-</button>
+                                <span style="font-weight:bold; width:20px; text-align:center;">${qty}</span>
+                                <button class="btn-qty btn-plus" onclick="updateCart('${item.n}', ${item.p}, 1)">+</button>
+                            ` : `<button class="add-btn-init" onclick="updateCart('${item.n}', ${item.p}, 1)">ADD</button>`}
+                        </div>
+                    </div>`;
+            });
+            card.innerHTML = itemsHtml;
+            display.appendChild(card);
+        }
+    }
+
+    function updateCart(name, price, change) {
+        if (!cart[name]) cart[name] = { price: price, qty: 0 };
+        cart[name].qty += change;
+        if (cart[name].qty <= 0) delete cart[name];
+        renderMenu();
+        updateCartBar();
+    }
+
+    function updateCartBar() {
+        const ui = document.getElementById('cart-ui');
+        const status = document.getElementById('cart-status');
+        let totalItems = 0, totalPrice = 0;
+        for (let key in cart) { totalItems += cart[key].qty; totalPrice += (cart[key].price * cart[key].qty); }
+        if (totalItems > 0) { ui.style.display = 'flex'; status.innerHTML = `🛒 ${totalItems} Items | ₹${totalPrice}`; } 
+        else { ui.style.display = 'none'; }
+    }
+
+    // Modal Functions
+    function openOrderModal() {
+        document.getElementById('orderModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('orderModal').style.display = 'none';
+    }
+
+    function sendToWhatsApp() {
+        const name = document.getElementById('custName').value.trim();
+        const table = document.getElementById('tableSelect').value;
+
+        if (!name || !table) {
+            alert("Please enter your name and select a table number.");
+            return;
+        }
+
+        const phone = "918275035386";
+        let text = `☕ *NEW ORDER - STARK CAFE*%0A--------------------------%0A`;
+        text += `👤 *Customer:* ${name}%0A`;
+        text += `📍 *Table No:* ${table}%0A--------------------------%0A`;
+
+        for (let key in cart) {
+            text += `• *${key}* (x${cart[key].qty}) - ₹${cart[key].price * cart[key].qty}%0A`;
+        }
+        
+        let totalStr = document.getElementById('cart-status').innerText.split('₹')[1];
+        text += `--------------------------%0A💰 *Total Amount: ₹${totalStr}*`;
+        
+        window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+        closeModal();
+    }
+
+    renderMenu();
+</script>
+
+</body>
+</html>
