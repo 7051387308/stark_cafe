@@ -40,26 +40,51 @@
         .nav-links a { text-decoration: none; color: var(--text); margin-left: 20px; font-weight: 500; font-size: 0.9rem; transition: 0.3s; }
         .nav-links a:hover { color: var(--accent); }
 
-        /* --- PARALLAX EFFECT --- */
-        .parallax-section {
-            height: 100vh;
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-        }
+      /* --- UPDATED PARALLAX FOR MOBILE --- */
+.parallax-section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    /* Mobile fix: background ko pseudo-element me move karenge */
+    background-attachment: fixed; 
+}
 
-        .img-1 { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://image2url.com/r2/default/images/1768991200384-b2b29f7e-0227-4f28-adf0-beb8618005b9.jpeg'); }
-        .img-2 { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1600'); }
-        .img-3 { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1600'); }
-        .img-4 { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1600'); }
+/* Pseudo-element fix for mobile parallax */
+.parallax-section::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Main property for desktop */
+    z-index: -1;
+}
 
+/* Background images mapping to pseudo-elements */
+.img-1::before { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://image2url.com/r2/default/images/1768991200384-b2b29f7e-0227-4f28-adf0-beb8618005b9.jpeg'); }
+.img-2::before { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://i.ibb.co/gpZrP1g/cafe1.jpg'); }
+.img-3::before { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://i.ibb.co/rRQf6M48/ppizza.jpg'); }
+.img-4::before { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://i.ibb.co/WNqkqpS7/Whats-App-Image-2026-01-22-at-1-07-56-AM-1.jpg'); }
+
+/* Mobile Media Query Fix */
+@media (max-width: 768px) {
+    .parallax-section {
+        background-attachment: scroll; /* Parent reset */
+    }
+    .parallax-section::before {
+        background-attachment: fixed !important; /* Force fixed for parallax feel */
+        /* iOS Safari support */
+        -webkit-background-size: cover;
+    }
+    .parallax-section h1 { font-size: 2.8rem; }
+    .nav-logo-text { font-size: 1.2rem; }
+    .nav-logo-img { width: 35px; height: 35px; }
+}
         .parallax-section h1 { font-family: 'Playfair Display', serif; font-size: 4.5rem; color: var(--gold); text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
         .parallax-section p { font-size: 1.3rem; max-width: 600px; margin-bottom: 20px; text-shadow: 1px 1px 5px rgba(0,0,0,0.5); }
         
@@ -90,7 +115,41 @@
         .btn-plus { background: var(--success); color: white; }
         .add-btn-init { background: transparent; border: 1.5px solid var(--accent); color: var(--accent); padding: 5px 15px; border-radius: 20px; cursor: pointer; font-weight: 600; transition: 0.3s; }
         .add-btn-init:hover { background: var(--accent); color: var(--primary); }
+ /* --- UPDATED FOOTER STYLING --- */
+:root {
+    /* ... your existing variables ... */
+    --footer-bg: #0a0a0a;
+}
 
+.main-footer {
+    background-color: var(--footer-bg);
+    color: white;
+    padding: 60px 8% 20px 8%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+    border-top: 1px solid #3d2b1f;
+    margin-top: 50px;
+}
+
+.footer-gallery { flex: 1.5; min-width: 300px; }
+.footer-gallery h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 25px; color: var(--accent); }
+.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.gallery-grid img { width: 100%; aspect-ratio: 1; border-radius: 8px; object-fit: cover; border: 1px solid #333; }
+
+.footer-contact { flex: 1; min-width: 250px; }
+.footer-contact h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 25px; color: var(--accent); }
+.contact-item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 1.1rem; }
+.contact-item i { color: var(--accent); font-size: 1.2rem; width: 20px; }
+.contact-item a { color: white; text-decoration: none; transition: 0.3s; }
+.contact-item a:hover { color: var(--accent); }
+
+.social-icons { display: flex; gap: 20px; margin-top: 25px; }
+.social-icons a { color: white; font-size: 1.5rem; transition: 0.3s; }
+.social-icons a:hover { color: var(--accent); transform: translateY(-3px); }
+
+.copyright { text-align: center; width: 100%; margin-top: 40px; padding-top: 20px; border-top: 1px solid #333; color: #777; font-size: 0.8rem; }
         /* --- CART & MODAL --- */
         .cart-bar { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 550px; background: var(--accent); color: var(--primary); padding: 15px 30px; border-radius: 50px; display: none; justify-content: space-between; align-items: center; z-index: 2000; box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
         
@@ -120,7 +179,7 @@
 
 <nav>
     <div class="nav-logo-container">
-        <img src="logo.png.jpeg" alt="Stark Cafe Logo" class="nav-logo-img">
+        <img src="logo.png.jpeg"alt="Stark Cafe Logo" class="nav-logo-img">
         <div class="nav-logo-text">Stark Café</div>
     </div>
     <div class="nav-links">
@@ -132,24 +191,24 @@
 
 <div id="home">
     <section class="parallax-section img-1">
-        <h1>Stark Café</h1>
-        <p>Premium Coffee & Handcrafted Moments at RIT College.</p>
+        <h1>Stark Cafe</h1>
+        <p>Where minimalism meets maximum flavor and timeless comfort</p>
         <a href="#menu" class="btn-order">VIEW MENU</a>
     </section>
 
     <div class="divider-content">
-        <h2>Freshly Brewed Excellence</h2>
-        <p>Experience the finest coffee blend in Islampur.</p>
+        <h2>Freshly Brewed Excellence coffee</h2>
+        <p>Fueled by caffeine and ambition.</p>
     </div>
 
     <section class="parallax-section img-2">
-        <h1>The Perfect Roast</h1>
-        <p>Expertly brewed for your daily caffeine kick.</p>
+        <h1>The Perfect cheezy pizzas</h1>
+        <p>Slices so good, you won’t want to share.</p>
     </section>
 
     <div class="divider-content">
         <h2>Delicious Snacks</h2>
-        <p>From cheezy pizzas to hot grilled sandwiches.</p>
+        <p>From freshly brewed coffee to hot grilled sandwiches.</p>
     </div>
 
     <section class="parallax-section img-3">
@@ -159,7 +218,7 @@
 
     <section class="parallax-section img-4">
         <h1>Join The Vibe</h1>
-        <p>Best place to hang out with friends at RIT College.</p>
+        <p>Minimalist space for your maximalist cravings</p>
     </section>
 </div>
 
@@ -171,22 +230,40 @@
     <div id="menu-display" class="menu-grid"></div>
 </div>
 
-<section id="contact">
-    <div class="contact-grid">
-        <div class="contact-box">
-            <i class="fas fa-map-marker-alt" style="font-size: 2rem; color: var(--accent);"></i>
-            <h3 style="color: var(--gold); margin-top: 15px;">Location</h3>
-            <p>RIT College Takari Road, Islampur</p>
-        </div>
-        <div class="contact-box">
-            <i class="fas fa-phone-alt" style="font-size: 2rem; color: var(--accent);"></i>
-            <h3 style="color: var(--gold); margin-top: 15px;">Contact</h3>
-            <p>+91 8275035386</p>
+<footer class="main-footer">
+    <div class="footer-gallery">
+        <h3>Cafe Gallery</h3>
+        <div class="gallery-grid">
+            <img src="https://i.ibb.co/60LWCMHv/momos.jpg" alt="Coffee">
+            <img src="https://i.ibb.co/WNqkqpS7/Whats-App-Image-2026-01-22-at-1-07-56-AM-1.jpg" alt="Vibe">
+            <img src="https://i.ibb.co/gpZrP1g/cafe1.jpg" alt="Pizza">
+             <img src="https://i.ibb.co/27vqm7Nm/interoir.jpg" alt="Interior">
+            <img src="https://i.ibb.co/rRQf6M48/ppizza.jpg" alt="Sandwiches">
+            <img src="https://i.ibb.co/wFW65VSp/cafe3.jpg" alt="Burger">
         </div>
     </div>
-</section>
 
-<footer>&copy; 2026 Stark Café Islampur</footer>
+    <div class="footer-contact">
+        <h3>Find Us</h3>
+        <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>RIT College Takari Road, Islampur</span>
+        </div>
+        <div class="contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <a href="tel:+918275035386">+91 8275035386</a>
+        </div>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/stark__cafe?igsh=MWV5a2s3ZmxnbG8y"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="+918275035386"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </div>
+
+    <div class="copyright">
+        &copy; 2026 Stark Café Islampur | Premium Experience
+    </div>
+</footer>
 
 <div class="cart-bar" id="cart-ui">
     <div id="cart-status" style="font-weight: 800;">0 Items | ₹0</div>
@@ -354,4 +431,5 @@
 </script>
 
 </body>
+
 </html>
